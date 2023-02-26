@@ -3,12 +3,11 @@ package com.rendShow.subscriptionService.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.rendShow.subscriptionService.dto.SubscriptionRequest;
 import com.rendShow.subscriptionService.pojo.Subscriptions;
 
 public interface SubscriptionService {
 	
-	void createSubscription(SubscriptionRequest subscriptionRequest);
+	Subscriptions createSubscription(Subscriptions subscriptions);
 //	Subscriptions getSubscriptionById(Long id);
 //	List<Subscriptions> getAllSubscriptions();
 //	Subscriptions updateSubscription(Subscriptions subscription);

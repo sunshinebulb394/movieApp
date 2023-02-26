@@ -1,22 +1,18 @@
 package com.rendShow.subscriptionService.service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
+import com.rendShow.subscriptionService.dto.CustomersDto;
+import com.rendShow.subscriptionService.pojo.SubscriptionType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.rendShow.subscriptionService.Repository.SubscriptionRepository;
 import com.rendShow.subscriptionService.config.WebClientConfig;
-import com.rendShow.subscriptionService.dto.CustomerResponse;
-import com.rendShow.subscriptionService.dto.SubscriptionRequest;
-import com.rendShow.subscriptionService.dto.SubscriptionResponse;
 import com.rendShow.subscriptionService.pojo.Subscriptions;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -27,20 +23,55 @@ public class SubscriptionServiceImp implements SubscriptionService {
 	private SubscriptionRepository subscriptionRepository;
 	
 	@Autowired
-	private WebClientConfig webClient;
+	private WebClientConfig webClientConfig;
 
 	
 
 	@Override
-	public void createSubscription(SubscriptionRequest subscriptionRequest) {
+	public Subscriptions createSubscription(Subscriptions subscriptions) {
+//		int userAllowed = 5;
+//		int usersTryingToAccess = subscriptions.getUsersAllowed();
+//		if(usersTryingToAccess > userAllowed){
+//			throw new AccessDeniedException("Maximum number of users exceeded.");
+//		}
 
-		Subscriptions subscriptions = Subscriptions.builder()
-			   .subscriptionType(subscriptionRequest.getSubscriptionType())
-			   .price(subscriptionRequest.getPrice())
-			   .build();
+		double price = subscriptions.getPrice();
+		String subscriptionType = String.valueOf(subscriptions.getSubscriptionType());
+		if(subscriptionType.equals("Basic")){
+			price +=100;
+		} else if (subscriptionType.equals("Standard")) {
+			price +=150;
+		} else if (subscriptionType.equals("Premium")) {
+			price +=200;
+		}
+		Subscriptions subscription = Subscriptions.builder()
+				.planId(subscriptions.getPlanId())
+				.price(price)
+				.subscriptionType(SubscriptionType.valueOf(subscriptionType))
+				.subscriptionDate(calculateEndDate())
+				.usersAllowed(subscriptions.getUsersAllowed())
+				.build();
 
-		subscriptionRepository.save(subscriptions);
+		return webClientConfig.webClientBuilder()
+				.build()
+				.post()
+				.uri("http://localhost:1001/api/customer", CustomersDto.builder())
+				.body(Mono.just(subscription), Subscriptions.class)
+				.retrieve()
+				.bodyToMono(Subscriptions.class)
+				.block();
+
+
+
 	}
+
+	private LocalDate calculateEndDate() {
+		int planValidity = 30;
+		LocalDate subscriptionDate = LocalDate.now();
+		return (LocalDate) subscriptionDate.plusMonths(planValidity);
+	}
+
+
 //	public void createSubscription(SubscriptionRequest subscriptionRequest) {
 //
 //	   Subscriptions subscriptions = Subscriptions.builder()
@@ -63,22 +94,17 @@ public class SubscriptionServiceImp implements SubscriptionService {
 //
 //	}
 
-	public List<SubscriptionResponse> getAllProducts() {
-		List<Subscriptions> subscriptions = subscriptionRepository.findAll();
-		return  subscriptions.stream().map(this::mapToSubscriptionResponse).toList();
-		
-		
-	}
+
 	
-	private SubscriptionResponse mapToSubscriptionResponse(Subscriptions subscriptions) {
-		return SubscriptionResponse.builder()
-				.planId(subscriptions.getPlanId())
-				.subscriptionType(subscriptions.getSubscriptionType())
-				.price(subscriptions.getPrice())
-				.planValidity(subscriptions.getPlanValidity())
-				.usersAllowed(subscriptions.getUsersAllowed())
-				.build();
-	}
+//	private SubscriptionResponse mapToSubscriptionResponse(Subscriptions subscriptions) {
+//		return SubscriptionResponse.builder()
+//				.planId(subscriptions.getPlanId())
+//				.subscriptionType(subscriptions.getSubscriptionType())
+//				.price(subscriptions.getPrice())
+//				.planValidity(subscriptions.getPlanValidity())
+//				.usersAllowed(subscriptions.getUsersAllowed())
+//				.build();
+//	}
 	
 //	int planValidity = 30;
 //	SubscriptionService subscriptionService = new SubscriptionService();
@@ -89,9 +115,7 @@ public class SubscriptionServiceImp implements SubscriptionService {
 
 	
 	
-	public LocalDate calculateEndDate(LocalDate subscriptionDate, int planValidity) {
-		return subscriptionDate.plusMonths(planValidity);
-	}
+
 	
 	
 	

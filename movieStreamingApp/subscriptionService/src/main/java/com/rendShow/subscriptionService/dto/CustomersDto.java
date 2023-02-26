@@ -1,10 +1,6 @@
-package com.rendShow.customerService.dto;
+package com.rendShow.subscriptionService.dto;
 
-import com.rendShow.customerService.pojo.Address;
-
-
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,18 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class CustomerResponse {
-	
-    @Id
+public class CustomersDto {
+
 	private Long id;
-	private String customerId;
 	private String firstName;
 	private String lastName;
 	private String phoneNo;
 	private String email;
 	private String password;
 	
-	@Embedded
-	private Address address;
+
 
 }
