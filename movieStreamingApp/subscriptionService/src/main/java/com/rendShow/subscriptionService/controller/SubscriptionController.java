@@ -3,13 +3,11 @@ package com.rendShow.subscriptionService.controller;
 import java.util.List;
 
 import com.rendShow.subscriptionService.Repository.SubscriptionRepository;
-import com.rendShow.subscriptionService.dto.CustomerResponse;
 import com.rendShow.subscriptionService.pojo.Subscriptions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.rendShow.subscriptionService.dto.SubscriptionRequest;
+import com.rendShow.subscriptionService.dto.SubscriptionDto;
 import com.rendShow.subscriptionService.dto.SubscriptionResponse;
 import com.rendShow.subscriptionService.service.SubscriptionServiceImp;
 
@@ -26,9 +24,9 @@ public class SubscriptionController {
 	private SubscriptionRepository subscriptionRepository;
 
 	
-	@PostMapping
-	public void createSubscription(@RequestBody SubscriptionRequest subscriptionRequest) {
-		subscriptionService.createSubscription(subscriptionRequest);
+	@PostMapping("/create")
+	public Subscriptions createSubscription(@RequestBody SubscriptionDto subscriptionRequest) {
+		return subscriptionService.createSubscription(subscriptionRequest);
 		
 	}
 	

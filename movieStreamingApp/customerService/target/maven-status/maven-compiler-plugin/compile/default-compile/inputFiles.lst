@@ -1,0 +1,11 @@
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/config/WebClientConfig.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/service/CustomerServiceImp.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/repository/CustomerRepository.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/dto/SubscriptionDto.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/dto/CustomerResponse.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/pojo/Address.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/pojo/Customers.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/dto/CustomerRequest.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/CustomerServiceApplication.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/controller/CustomerController.java
+/Users/georgebanin/Downloads/movieApp/movieStreamingApp/customerService/src/main/java/com/rendShow/customerService/service/CustomerService.java

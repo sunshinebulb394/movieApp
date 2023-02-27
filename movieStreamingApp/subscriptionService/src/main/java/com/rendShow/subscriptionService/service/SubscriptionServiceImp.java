@@ -1,23 +1,18 @@
 package com.rendShow.subscriptionService.service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.rendShow.subscriptionService.Repository.SubscriptionRepository;
 import com.rendShow.subscriptionService.config.WebClientConfig;
-import com.rendShow.subscriptionService.dto.CustomerResponse;
-import com.rendShow.subscriptionService.dto.SubscriptionRequest;
+import com.rendShow.subscriptionService.dto.SubscriptionDto;
 import com.rendShow.subscriptionService.dto.SubscriptionResponse;
 import com.rendShow.subscriptionService.pojo.Subscriptions;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.client.RestTemplate;
-import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -32,14 +27,19 @@ public class SubscriptionServiceImp implements SubscriptionService {
 	
 
 	@Override
-	public void createSubscription(SubscriptionRequest subscriptionRequest) {
+	public Subscriptions createSubscription(SubscriptionDto subscriptionRequest) {
 
 		Subscriptions subscriptions = Subscriptions.builder()
 			   .subscriptionType(subscriptionRequest.getSubscriptionType())
 			   .price(subscriptionRequest.getPrice())
+				.email(subscriptionRequest.getEmail())
+				.subscriptionDate(LocalDate.now())
+				.planValidity(subscriptionRequest.getPlanValidity())
+				.usersAllowed(subscriptionRequest.getUsersAllowed())
 			   .build();
 
 		subscriptionRepository.save(subscriptions);
+		return subscriptions;
 	}
 //	public void createSubscription(SubscriptionRequest subscriptionRequest) {
 //

@@ -23,12 +23,12 @@ public class Subscriptions {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long planId;
-	private String customerId;
+	private String email;
 	private String subscriptionType;
 	private BigDecimal price;
-	private LocalDate subscriptionDate = LocalDate.now();
-	private Integer usersAllowed = 5;
-    private Integer planValidity = 30;
+	private LocalDate subscriptionDate ;
+	private Integer usersAllowed ;
+    private Integer planValidity ;
    
 
 

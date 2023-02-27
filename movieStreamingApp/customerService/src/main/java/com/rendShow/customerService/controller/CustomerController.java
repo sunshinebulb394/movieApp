@@ -3,10 +3,11 @@ package com.rendShow.customerService.controller;
 import java.util.List;
 
 import com.rendShow.customerService.config.WebClientConfig;
-import com.rendShow.customerService.dto.SubcriptionDto;
 import com.rendShow.customerService.dto.SubscriptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,12 +58,14 @@ public class CustomerController {
 				.email(subscriptionDto.getEmail())
 				.price(subscriptionDto.getPrice())
 				.subscriptionType(subscriptionDto.getSubscriptionType())
+				.planValidity(subscriptionDto.getPlanValidity())
 				.build();
 		return webClientConfig.webClientBuilder()
 				.build()
 				.post()
 				//send the request to the post method in ticket service
-				.uri("http://subsription_service/api/subscription")
+				.uri("http://subscription-service/api/subscription/create")
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.body(Mono.just(sub),SubscriptionDto.class)
 				.retrieve()
 				.bodyToMono(SubscriptionDto.class)

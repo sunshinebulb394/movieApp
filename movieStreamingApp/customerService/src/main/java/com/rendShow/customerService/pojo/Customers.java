@@ -26,8 +26,5 @@ public class Customers {
 	private String phoneNo;
 	private String email;
 	private String password;
-	
-	@Embedded
-	private Address address;
 
 }

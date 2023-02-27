@@ -27,7 +27,6 @@ public class CustomerServiceImp implements CustomerService {
 				.email(customerRequest.getEmail())
 				.password(customerRequest.getPhoneNo())
 				.phoneNo(customerRequest.getPhoneNo())
-				.address(customerRequest.getAddress())
 				.build();
 		customerRepository.save(customer);
 		
@@ -50,7 +49,7 @@ public class CustomerServiceImp implements CustomerService {
 				.phoneNo(customer.getPhoneNo())
 				.email(customer.getEmail())
 				.password(customer.getPassword())
-				.address(customer.getAddress())
+
 				.build();
 	}
 	

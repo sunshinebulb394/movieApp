@@ -10,7 +10,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class SubscriptionDto {
-    private BigDecimal price;
-    private String subscriptionType;
     private String email;
+    private String subscriptionType;
+    private BigDecimal price;
+    private Integer usersAllowed ;
+    private Integer planValidity ;
+
 }
